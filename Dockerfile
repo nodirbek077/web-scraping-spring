@@ -8,7 +8,7 @@ WORKDIR /app
 COPY . /app
 
 # Maven build jarayonini bajaramiz
-RUN ./mvnw clean package -DskipTests
+#RUN #./mvnw clean package -DskipTests
 
 # JAR faylni ishga tushirish uchun ko‘chiramiz
 COPY target/*.jar app.jar
