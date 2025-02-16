@@ -14,7 +14,7 @@ RUN chmod +x mvnw
 RUN ./mvnw clean package -DskipTests
 
 # JAR faylni ishga tushirish uchun ko‘chiramiz
-COPY target/*.jar app.jar
+COPY ./target/*.jar app.jar
 
 # Render 10000-port orqali ishlaydi, uni ochamiz
 EXPOSE 10000
