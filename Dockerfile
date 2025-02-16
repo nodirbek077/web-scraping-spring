@@ -3,7 +3,7 @@ LABEL authors="Clone"
 
 WORKDIR /web-scraping-spring
 
-COPY target/*.jar web-scraping-spring
+COPY target/*.jar web-scraping-spring.jar
 
 EXPOSE 10000
 
