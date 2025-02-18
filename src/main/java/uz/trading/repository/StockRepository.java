@@ -10,4 +10,6 @@ public interface StockRepository extends JpaRepository<StockData, Integer> {
 
     @Query(value = "SELECT * FROM STOCKS ORDER BY STOCK_ID DESC", nativeQuery = true)
     List<StockData> findAllStockData();
+
+    List<StockData> findByStockNameOrderByStockIdDesc(String stockName);
 }

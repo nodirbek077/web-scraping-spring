@@ -16,13 +16,14 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class StockDataService {
     private final StockRepository stockRepository;
 
-    @Scheduled(cron = "0 0/2 * * * ?")
+    @Scheduled(cron = "0 0/15 * * * ?")
     public void fetchStockData() {
         try {
             String startDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
@@ -122,5 +123,13 @@ public class StockDataService {
     public GetStockDataResponse getAllStockData() {
         List<StockData> allStockData = stockRepository.findAllStockData();
         return new GetStockDataResponse(0, "Completed successfully!", allStockData);
+    }
+
+    public List<GetStockDataResponse> getStockDataByName(String stockName) {
+        List<StockData> stockDataList = stockRepository.findByStockNameOrderByStockIdDesc(stockName);
+
+        return stockDataList.stream()
+                .map(stock -> new GetStockDataResponse(0, "Completed successfully", stockDataList))
+                .collect(Collectors.toList());
     }
 }

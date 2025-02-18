@@ -30,4 +30,6 @@ public class GetStockDataResponse {
         this.errorMessage = errorMessage;
         this.stockData = stockData;
     }
+
+
 }
