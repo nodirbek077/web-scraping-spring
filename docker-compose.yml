@@ -1,0 +1,29 @@
+services:
+  app:
+    image: scraping_app:12
+    container_name: scraping_app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file: .env
+    restart: always
+    ports:
+      - target: 8090
+        published: 99
+        protocol: tcp
+        mode: host
+
+  db:
+    image: postgres
+    volumes:
+      - './development/server/postgres:/var/lib/postgresql'
+    environment:
+      - POSTGRES_DB=scraping
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    restart: always
+    ports:
+      - target: 5432
+        published: 5592
+        protocol: tcp
+        mode: host

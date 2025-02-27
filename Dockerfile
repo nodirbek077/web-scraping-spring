@@ -1,23 +1,25 @@
-# Java 17 bilan tayyor Docker imidjidan foydalanamiz
-FROM eclipse-temurin:17-jdk
+# Builder
+FROM maven:3.9.5-amazoncorretto-21-debian-bookworm as builder
+ENV TZ="Asia/Tashkent"
 
-# Ishchi katalogni yaratamiz
 WORKDIR /app
+COPY src src
+COPY pom.xml pom.xml
 
-# Butun loyihani konteyner ichiga nusxalash
-COPY . /app
+RUN mvn package -DskipTests
+RUN mvn clean package -DskipTests
 
-# Maven wrapper ruxsatlarini sozlash
-RUN chmod +x mvnw
+# Application
+FROM eclipse-temurin:21-jdk
+ENV TZ="Asia/Tashkent"
 
-# Maven build jarayonini bajaramiz (target katalogi yaratiladi)
-RUN ./mvnw clean package -DskipTests
+RUN apt-get update && apt-get install -y \
+    libstdc++6 libcurl3-gnutls libc6 libxml2 libcurl4 fonts-dejavu fonts-opensymbol wget \
+    fonts-liberation fonts-crosextra-carlito && \
+    apt-get clean \
 
-# JAR faylni ishga tushirish uchun ko‘chiramiz
-COPY ./target/*.jar app.jar
+WORKDIR /app/lib
+COPY --from=builder /app/target/*.jar application.jar
+COPY --from=builder /app/src/main/resources/application.yml application.yml
 
-# Render 10000-port orqali ishlaydi, uni ochamiz
-EXPOSE 10000
-
-# JAR faylni ishga tushiramiz
-CMD ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "application.jar"]

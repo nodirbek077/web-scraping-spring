@@ -23,7 +23,7 @@ public class Product {
     @Column(nullable = false)
     private String price;
 
-    @Column(nullable = false)
+    @Column(name = "created_date", nullable = false)
     private LocalDateTime createdDate;
 
     public LocalDateTime getCreatedDate() {

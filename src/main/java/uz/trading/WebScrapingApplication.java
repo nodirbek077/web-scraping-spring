@@ -12,9 +12,9 @@ import java.time.format.DateTimeFormatter;
 
 @SpringBootApplication
 @EnableScheduling
-@OpenAPIDefinition(
-        servers = {@Server(url = "http://localhost:8080",description = "server url")},
-        info = @Info(title = "Trading API", version = "1.0"))
+//@OpenAPIDefinition(
+//        servers = {@Server(url = "http://localhost:8080",description = "server url")},
+//        info = @Info(title = "Trading API", version = "1.0"))
 public class WebScrapingApplication {
 
     public static void main(String[] args) {

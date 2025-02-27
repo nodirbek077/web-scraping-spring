@@ -1,8 +1,11 @@
 package uz.trading.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.time.LocalDateTime;
 
 @Setter
 @Getter
@@ -12,22 +15,22 @@ public class StockData {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer stockId;
+    private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "stock_name", nullable = false)
     private String stockName;
 
-    @Column(nullable = false)
+    @Column(name = "stock_price", nullable = false)
     private Double stockPrice;
 
-    @Column(nullable = false)
+    @Column(name = "stock_volume", nullable = false)
     private String stockVolume;
 
-    @Column(nullable = false)
+    @Column(name = "stock_open", nullable = false)
     private Double stockOpen;
 
-    @Column(nullable = false)
-    private String currentDate;
+    @Column(name = "today_date", nullable = false)
+    private LocalDateTime todayDate;
 
     public StockData() {
     }
