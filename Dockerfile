@@ -9,6 +9,7 @@ COPY pom.xml pom.xml
 RUN mvn package -DskipTests
 RUN mvn clean package -DskipTests
 
+
 # Application
 FROM eclipse-temurin:21-jdk
 ENV TZ="Asia/Tashkent"
