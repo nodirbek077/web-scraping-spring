@@ -15,12 +15,13 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import uz.trading.dto.ResponseDTO;
 import uz.trading.entity.StockData;
 import uz.trading.payload.response.GetStockDataResponse;
 import uz.trading.repository.StockRepository;
-
 import java.io.IOException;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -97,44 +98,6 @@ public class StockDataService {
         } catch (IOException e) {
             System.out.println("Error: " + e.getMessage());
         }
-
-//        try {
-//            driver.get("https://finance.yahoo.com/quote/AAPL/");
-//            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-//
-//            // ✅ Foydalanuvchi sahifani ko'rib chiqayotganga o'xshatish
-//            ((JavascriptExecutor) driver).executeScript("window.scrollBy(0,300)");
-//
-//            // ✅ Sahifa yuklanishini kutish
-//            wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("span[data-testid='qsp-price']")));
-//
-//            String price = driver.findElement(By.cssSelector("span[data-testid='qsp-price']")).getText();
-//            String volume = driver.findElement(By.cssSelector("fin-streamer[data-field='regularMarketVolume']")).getText();
-//            String open = driver.findElement(By.cssSelector("fin-streamer[data-field='regularMarketOpen']")).getText();
-//
-//            System.out.println("Price: " + price);
-//            System.out.println("Volume: " + volume);
-//            System.out.println("Open: " + open);
-//            System.out.println("Date: " + LocalDateTime.now());
-//
-//            int waitTime = ThreadLocalRandom.current().nextInt(5000, 15000);
-//            System.out.println("Waiting for " + (waitTime / 1000) + " seconds...");
-//            Thread.sleep(waitTime);
-//
-//            StockData stockData = new StockData();
-//            stockData.setStockPrice(Double.valueOf(Objects.requireNonNull(price).replace(",", "")));
-//            stockData.setStockVolume(volume.replace(",", ""));
-//            stockData.setStockOpen(Double.valueOf(Objects.requireNonNull(open).replace(",", "")));
-//            stockData.setCurrentDate(LocalDateTime.now());
-//            stockData.setStockName("AAPL");
-//
-//            stockRepository.save(stockData);
-//
-//        } catch (Exception e) {
-//            System.out.println("Error while fetching AAPL data: " + e.getMessage());
-//        } finally {
-//            driver.quit();
-//        }
     }
 
     public void fetchStockDataTALK() {
@@ -201,5 +164,23 @@ public class StockDataService {
         return stockDataList.stream()
                 .map(stock -> new GetStockDataResponse(0, "Completed successfully", stockDataList))
                 .collect(Collectors.toList());
+    }
+
+
+    @Scheduled(cron = "0 0 0 * * ?")
+    public void deleteData(){
+
+        try {
+            String startDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            System.out.println("DELETE DATA IN DATABASE START... " + startDate);
+
+            List<StockData> dataList = stockRepository.findAllStockData();
+            stockRepository.deleteAll(dataList);
+
+            System.out.println("DELETE DATA IN DATABASE END... ");
+
+        } catch (Exception e) {
+            System.out.println("ERROR DELETED: " + e.getMessage());
+        }
     }
 }

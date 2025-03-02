@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import uz.trading.dto.JwtDTO;
 import uz.trading.utils.JwtUtil;
-
 import java.io.IOException;
 
 @Component
@@ -26,21 +25,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private UserDetailsService userDetailsService;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         final String header = request.getHeader("Authorization");
         if (header == null || !header.startsWith("Bearer ")) {
-            filterChain.doFilter(request, response); // Continue the filter chain
+            filterChain.doFilter(request, response);
             return;
         }
 
         try {
             final String token = header.substring(7).trim();
             JwtDTO dto = JwtUtil.decode(token);
-            // load user depending on role
-            String email = dto.getUsername();
-            UserDetails userDetails = userDetailsService.loadUserByUsername(email);
+            String username = dto.getUsername();
+            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
@@ -48,8 +44,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             filterChain.doFilter(request, response);
         } catch (JwtException | UsernameNotFoundException e) {
-            filterChain.doFilter(request, response); // Continue the filter chain
-            return;
+            filterChain.doFilter(request, response);
         }
     }
 }

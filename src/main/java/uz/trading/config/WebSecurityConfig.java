@@ -15,7 +15,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import uz.trading.security.JwtAuthenticationFilter;
-
 import java.util.List;
 
 @Configuration
@@ -31,9 +30,6 @@ public class WebSecurityConfig {
             "/v1/auth/**",
             "/v1/auth",
             "/v1/test/*",
-            "/api/trading/**",
-            "/api/trading/*",
-            "/api/trading",
             "/swagger-ui/**",
             "/v3/api-docs",
             "/v3/api-docs/**",

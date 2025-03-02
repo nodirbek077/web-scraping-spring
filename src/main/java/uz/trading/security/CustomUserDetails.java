@@ -1,11 +1,11 @@
 package uz.trading.security;
 
+
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -17,6 +17,7 @@ public class CustomUserDetails implements UserDetails {
     private final String username;
     private final String role;
     private final String status;
+
 
     public CustomUserDetails(String username, String password,  String role, String status) {
         this.password = password;

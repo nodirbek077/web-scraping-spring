@@ -11,11 +11,16 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        System.out.println("loadUserByUsername: " + username);
-        if (username == null) {
+
+        if(!username.equals("scraping_app")){
             throw new UsernameNotFoundException("User not found");
         }
 
-        return new CustomUserDetails(username, "password", "USER","ACTIVE");
+        return new CustomUserDetails(
+                username,
+                "scraping_app",
+                "scraping_app123",
+                "ACTIVE"
+        );
     }
 }

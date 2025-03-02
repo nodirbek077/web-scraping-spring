@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class JwtDTO {
+public class AuthRequestDTO {
 
     private String username;
     private String password;

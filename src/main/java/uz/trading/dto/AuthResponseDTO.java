@@ -2,13 +2,13 @@ package uz.trading.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
-public class JwtDTO {
+@RequiredArgsConstructor
+public class AuthResponseDTO {
 
-    private String username;
-    private String password;
+    private String token;
 }
