@@ -55,13 +55,14 @@ public class WebSecurityConfig {
         }).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         http.csrf(AbstractHttpConfigurer::disable);
-        http.cors(Customizer.withDefaults());
+//        http.cors(Customizer.withDefaults());
 
         http.cors(httpSecurityCorsConfigurer -> {
             CorsConfiguration configuration = new CorsConfiguration();
-            configuration.setAllowedOriginPatterns(List.of("*"));
-            configuration.setAllowedMethods(List.of("*"));
+            configuration.setAllowedOrigins(List.of("https://scraping-app-cnqd.onrender.com"));
+            configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
             configuration.setAllowedHeaders(List.of("*"));
+            configuration.setAllowCredentials(true);
 
             UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
             source.registerCorsConfiguration("/**", configuration);

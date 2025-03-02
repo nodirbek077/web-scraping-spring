@@ -1,6 +1,6 @@
 services:
   app:
-    image: scraping_app:14
+    image: scraping_app:15
     container_name: scraping_app
     build:
       context: .
