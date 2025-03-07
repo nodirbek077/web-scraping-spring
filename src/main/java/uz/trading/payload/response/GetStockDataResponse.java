@@ -3,7 +3,7 @@ package uz.trading.payload.response;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import uz.trading.entity.StockData;
+import uz.trading.entity.Stock;
 
 import java.util.List;
 
@@ -18,14 +18,14 @@ public class GetStockDataResponse {
     private String errorMessage;
 
     @Schema(description = "Stock data", example = "")
-    private List<StockData> stockData;
+    private List<Stock> stockData;
 
     public GetStockDataResponse(Integer errorCode, String errorMessage) {
         this.errorCode = errorCode;
         this.errorMessage = errorMessage;
     }
 
-    public GetStockDataResponse(Integer errorCode, String errorMessage, List<StockData> stockData) {
+    public GetStockDataResponse(Integer errorCode, String errorMessage, List<Stock> stockData) {
         this.errorCode = errorCode;
         this.errorMessage = errorMessage;
         this.stockData = stockData;

@@ -2,9 +2,7 @@ package uz.trading.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
-import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
-import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
@@ -21,16 +19,16 @@ public class SwaggerConfig {
         Info info = new Info()
                 .title("Trading API")
                 .version("1.0.0")
-                .description("Trading API Documentation")
-                .contact(new Contact()
-                        .name("Nodir")
-                        .email("gmail.com")
-                        .url("https://t.me/nurqulovdev")
-                )
-                .license(new License()
-                        .name("Internal Product of Software Engineer")
-                        .url("https://trade.uz")
-                );
+                .description("Trading API Documentation");
+//                .contact(new Contact()
+//                        .name("Nodir")
+//                        .email("gmail.com")
+//                        .url("https://t.me/nurqulovdev")
+//                )
+//                .license(new License()
+//                        .name("Internal Product of Software Engineer")
+//                        .url("https://trade.uz")
+//                );
 
         SecurityRequirement securityRequirement = new SecurityRequirement();
         securityRequirement.addList("bearerAuth");

@@ -16,19 +16,17 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import uz.trading.dto.ResponseDTO;
-import uz.trading.entity.StockData;
+import uz.trading.entity.Stock;
 import uz.trading.payload.response.GetStockDataResponse;
 import uz.trading.repository.StockRepository;
 import java.io.IOException;
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -83,15 +81,15 @@ public class StockDataService {
                 return;
             }
             for (Map<String, Object> map :  responseDTO.getBody()) {
-                StockData stockData = new StockData();
-                stockData.setStockPrice(Double.parseDouble(map.get("regularMarketPrice").toString()));
-                stockData.setStockVolume(map.get("regularMarketVolume").toString());
-                stockData.setStockOpen(Double.parseDouble(map.get("regularMarketOpen").toString()));
-                stockData.setTodayDate(LocalDateTime.now());
-                stockData.setStockName(map.get("symbol").toString());
+                Stock stock = new Stock();
+                stock.setStockPrice(Double.parseDouble(map.get("regularMarketPrice").toString()));
+                stock.setStockVolume(map.get("regularMarketVolume").toString());
+                stock.setStockOpen(Double.parseDouble(map.get("regularMarketOpen").toString()));
+                stock.setTodayDate(LocalDateTime.now());
+                stock.setStockName(map.get("symbol").toString());
 
 
-                stockRepository.save(stockData);
+                stockRepository.save(stock);
             }
 
             System.out.println("Yahoo Finance API Response: " + responseData);
@@ -137,14 +135,14 @@ public class StockDataService {
             System.out.println("Waiting for " + (waitTime / 1000) + " seconds...");
             Thread.sleep(waitTime);
 
-            StockData stockData = new StockData();
-            stockData.setStockPrice(Double.valueOf(Objects.requireNonNull(price).replace(",", ""))); // ✅ Virgullarni olib tashlash
-            stockData.setStockVolume(volume.replace(",", ""));
-            stockData.setStockOpen(Double.valueOf(Objects.requireNonNull(open).replace(",", "")));
-            stockData.setTodayDate(LocalDateTime.now()); // ✅ LocalDateTime sifatida saqlash
-            stockData.setStockName("TALK");
+            Stock stock = new Stock();
+            stock.setStockPrice(Double.valueOf(Objects.requireNonNull(price).replace(",", ""))); // ✅ Virgullarni olib tashlash
+            stock.setStockVolume(volume.replace(",", ""));
+            stock.setStockOpen(Double.valueOf(Objects.requireNonNull(open).replace(",", "")));
+            stock.setTodayDate(LocalDateTime.now()); // ✅ LocalDateTime sifatida saqlash
+            stock.setStockName("TALK");
 
-            stockRepository.save(stockData);
+            stockRepository.save(stock);
 
         } catch (Exception e) {
             System.out.println("Error while fetching TALK data: " + e.getMessage());
@@ -154,33 +152,30 @@ public class StockDataService {
     }
 
     public GetStockDataResponse getAllStockData() {
-        List<StockData> allStockData = stockRepository.findAllStockData();
+        List<Stock> allStockData = stockRepository.findAllStockData();
         return new GetStockDataResponse(0, "Completed successfully!", allStockData);
     }
 
-    public List<GetStockDataResponse> getStockDataByName(String stockName) {
-        List<StockData> stockDataList = stockRepository.findByStockNameOrderByIdDesc(stockName);
-
-        return stockDataList.stream()
-                .map(stock -> new GetStockDataResponse(0, "Completed successfully", stockDataList))
-                .collect(Collectors.toList());
+    public GetStockDataResponse getStockDataByName(String stockName) {
+        List<Stock> stockListByName = stockRepository.findByStockNameOrderByIdDesc(stockName);
+        return new GetStockDataResponse(0, "Completed successfully!", stockListByName);
     }
 
 
-    @Scheduled(cron = "0 0 0 * * ?")
-    public void deleteData(){
-
-        try {
-            String startDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            System.out.println("DELETE DATA IN DATABASE START... " + startDate);
-
-            List<StockData> dataList = stockRepository.findAllStockData();
-            stockRepository.deleteAll(dataList);
-
-            System.out.println("DELETE DATA IN DATABASE END... ");
-
-        } catch (Exception e) {
-            System.out.println("ERROR DELETED: " + e.getMessage());
-        }
-    }
+//    @Scheduled(cron = "0 0 0 * * ?")
+//    public void deleteData(){
+//
+//        try {
+//            String startDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+//            System.out.println("DELETE DATA IN DATABASE START... " + startDate);
+//
+//            List<StockData> dataList = stockRepository.findAllStockData();
+//            stockRepository.deleteAll(dataList);
+//
+//            System.out.println("DELETE DATA IN DATABASE END... ");
+//
+//        } catch (Exception e) {
+//            System.out.println("ERROR DELETED: " + e.getMessage());
+//        }
+//    }
 }

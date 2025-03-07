@@ -1,8 +1,5 @@
 package uz.trading;
 
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
-import io.swagger.v3.oas.annotations.info.Info;
-import io.swagger.v3.oas.annotations.servers.Server;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -15,6 +12,7 @@ import java.time.format.DateTimeFormatter;
 //@OpenAPIDefinition(
 //        servers = {@Server(url = "http://localhost:8080",description = "server url")},
 //        info = @Info(title = "Trading API", version = "1.0"))
+//prod url: https://scraping-app-cnqd.onrender.com
 public class WebScrapingApplication {
 
     public static void main(String[] args) {
