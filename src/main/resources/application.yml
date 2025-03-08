@@ -10,43 +10,43 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         enable_lazy_load_no_trans: true
     initialization-mode: never
-  coredb:
-    url: jdbc:postgresql://dpg-cuqdne23esus738n9pj0-a:5432/scraping_db
-    jdbc-url: jdbc:postgresql://dpg-cuqdne23esus738n9pj0-a:5432/scraping_db
-    username: scraping_db_user
-    password: 1b9wm36olvE4aNHJ5c0gfBNgzY1moP17
-    driver-class-name: org.postgresql.Driver
-    enabled: true
-    hikari:
-      maximum-pool-size: 10
-    configuration:
-      jdbc-url: jdbc:postgresql://dpg-cuqdne23esus738n9pj0-a:5432/scraping_db
-      username: scraping_db_user
-      password: 1b9wm36olvE4aNHJ5c0gfBNgzY1moP17
-  liquibase:
-    url: jdbc:postgresql://dpg-cuqdne23esus738n9pj0-a:5432/scraping_db
-    user: scraping_db_user
-    password: 1b9wm36olvE4aNHJ5c0gfBNgzY1moP17
-    change-log: classpath:migration/changeLog.xml
-    enabled: true
 #  coredb:
-#    url: jdbc:postgresql://db:5432/scraping
-#    jdbc-url: jdbc:postgresql://db:5432/scraping
-#    username: postgres
-#    password: postgres
+#    url: jdbc:postgresql://dpg-cuqdne23esus738n9pj0-a:5432/scraping_db
+#    jdbc-url: jdbc:postgresql://dpg-cuqdne23esus738n9pj0-a:5432/scraping_db
+#    username: scraping_db_user
+#    password: 1b9wm36olvE4aNHJ5c0gfBNgzY1moP17
 #    driver-class-name: org.postgresql.Driver
 #    enabled: true
 #    hikari:
 #      maximum-pool-size: 10
 #    configuration:
-#      jdbc-url: jdbc:postgresql://db:5432/scraping
-#      username: postgres
-#      password: postgres
+#      jdbc-url: jdbc:postgresql://dpg-cuqdne23esus738n9pj0-a:5432/scraping_db
+#      username: scraping_db_user
+#      password: 1b9wm36olvE4aNHJ5c0gfBNgzY1moP17
 #  liquibase:
-#    url: jdbc:postgresql://db:5432/scraping
-#    user: postgres
-#    password: postgres
+#    url: jdbc:postgresql://dpg-cuqdne23esus738n9pj0-a:5432/scraping_db
+#    user: scraping_db_user
+#    password: 1b9wm36olvE4aNHJ5c0gfBNgzY1moP17
 #    change-log: classpath:migration/changeLog.xml
 #    enabled: true
+  coredb:
+    url: jdbc:postgresql://db:5432/scraping
+    jdbc-url: jdbc:postgresql://db:5432/scraping
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+    enabled: true
+    hikari:
+      maximum-pool-size: 10
+    configuration:
+      jdbc-url: jdbc:postgresql://db:5432/scraping
+      username: postgres
+      password: postgres
+  liquibase:
+    url: jdbc:postgresql://db:5432/scraping
+    user: postgres
+    password: postgres
+    change-log: classpath:migration/changeLog.xml
+    enabled: true
 server:
   port: 8090

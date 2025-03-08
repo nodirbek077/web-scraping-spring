@@ -1,0 +1,34 @@
+name: Deploy to Render
+
+on:
+  push:
+    branches:
+      - master  # Faqat master branchga push bo‘lganda ishga tushadi
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Kodni yuklash
+        uses: actions/checkout@v3
+
+      - name: Docker Hub-ga login qilish
+        run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+      - name: Docker image yaratish va Docker Hub-ga push qilish
+        run: |
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/myapp:latest .
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/myapp:latest
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Render'ga deploy qilish
+        run: |
+          curl -X POST "https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys" \
+          -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+          -H "Content-Type: application/json" \
+          -d "{}"
