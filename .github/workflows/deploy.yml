@@ -18,8 +18,8 @@ jobs:
 
       - name: Docker image yaratish va Docker Hub-ga push qilish
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/myapp:latest .
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/myapp:latest
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/scraping_app:latest .
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/scraping_app:latest
 
   deploy:
     needs: build
