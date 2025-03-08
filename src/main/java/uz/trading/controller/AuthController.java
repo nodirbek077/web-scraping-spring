@@ -13,7 +13,7 @@ import uz.trading.service.AuthService;
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
-@Tag(name = "Auth", description = "Authentication operations")
+@Tag(name = "Auth", description = "Authentication operations11")
 public class AuthController {
 
     private final AuthService authService;
