@@ -13,12 +13,12 @@ import uz.trading.service.AuthService;
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
-@Tag(name = "Auth", description = "Authentication operations11")
+@Tag(name = "Auth", description = "Authentication operations")
 public class AuthController {
 
     private final AuthService authService;
 
-    @PostMapping("/login")
+    @PostMapping("/login1")
     @Operation(summary = "Authorization", description = "API for login")
     public ResponseEntity<AuthResponseDTO> login(@RequestBody @Valid AuthRequestDTO dto) throws Exception {
         return ResponseEntity.ok(authService.login(dto));
